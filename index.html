@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Digital</title>
+
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* IMAGEM DO TOPO */
+        .imagem-topo {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .imagem-topo img {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #ffcc00;
+        }
+
+        h2 {
+            margin-top: 40px;
+            border-bottom: 2px solid #ffcc00;
+            padding-bottom: 5px;
+        }
+
+        .abas-principais {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-aba {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            border: 2px solid #333;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-aba.ativo {
+            background-color: #ffcc00;
+            color: #121212;
+            border-color: #ffcc00;
+        }
+
+        .sub-botoes-container {
+            display: none;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .btn-variacao {
+            flex: 1;
+            padding: 10px;
+            font-size: 0.95em;
+            font-weight: bold;
+            background-color: #222;
+            color: #ffcc00;
+            border: 2px solid #ffcc00;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-variacao.ativo {
+            background-color: #ffcc00;
+            color: #121212;
+        }
+
+        .menu-item, .adicional-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: #ffcc00;
+            font-size: 1.1em;
+        }
+
+        .item-description {
+            color: #cccccc;
+            font-size: 0.95em;
+            margin-top: 5px;
+        }
+
+        .secao-fixa {
+            display: none;
+        }
+
+        .secao-fixa.visivel {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- IMAGEM JPG NO TOPO -->
+    <div class="imagem-topo">
+        <img src="logo.jpg" alt="Logo da pizzaria">
+    </div>
+
+    <h1>Cardápio Digital</h1>
+
+    <!-- Abas Principais -->
+    <div class="abas-principais">
+        <button class="btn-aba ativo" id="aba-pizzas" onclick="mudarAba('pizzas')">
+            🍕 Pizzas
+        </button>
+    </div>
+
+    <!-- Sub-botões de Variação de Preço -->
+    <div class="sub-botoes-container" id="variacoes-pizzas" style="display: flex;">
+        <button class="btn-variacao ativo" id="btn-pizza-normal" onclick="mudarPrecoPizza('normal')">
+            🍕 As melhores da região
+        </button>
+    </div>
+
+    <div class="sub-botoes-container" id="variacoes-lanches">
+        <button type="disabled" class="btn-variacao ativo" id="btn-lanche-normal" onclick="mudarPrecoLanche('normal')">
+            Normal
+        </button>
+    </div>
+
+    <div class="sub-botoes-container" id="variacoes-esfirras">
+        <button class="btn-variacao ativo" id="btn-esfiha-normal" onclick="mudarPrecoEsfiha('normal')">
+            Normal
+        </button>
+    </div>
+
+    <!-- Lista onde os produtos aparecem -->
+    <div id="lista-produtos"></div>
+
+    <!-- Seções Complementares Fixas (Pizzas) -->
+    <div id="complementos-pizzas" class="secao-fixa visivel">
+
+        <!-- BORDAS -->
+        <h2>Bordas Recheadas</h2>
+
+        <div class="adicional-item">
+            <div class="item-header">
+                <span>Borda falsa</span>
+                <span>R$ 0,00</span>
+            </div>
+        </div>
+
+        <div class="adicional-item">
+            <div class="item-header">
+                <span>Borda de Catupiry</span>
+                <span>R$ 9,00</span>
+            </div>
+        </div>
+
+        <div class="adicional-item">
+            <div class="item-header">
+                <span>Borda de Mussarela</span>
+                <span>R$ 9,00</span>
+            </div>
+        </div>
+
+        <!-- EXTRAS -->
+        <h2>Extras</h2>
+
+        <div class="adicional-item">
+            <div class="item-header">
+                <span>Mussarela 100 gramas</span>
+                <span>R$ 7,00</span>
+            </div>
+        </div>
+
+        <div class="adicional-item">
+            <div class="item-header">
+                <span>Calabresa 100 gramas</span>
+                <span>R$ 4,00</span>
+            </div>
+        </div>
+
+        <div class="adicional-item">
+            <div class="item-header">
+                <span>Bacon 100 gramas</span>
+                <span>R$ 6,00</span>
+            </div>
+        </div>
+
+        <div class="adicional-item">
+            <div class="item-header">
+                <span>Frango 100 gramas</span>
+                <span>R$ 5,00</span>
+            </div>
+        </div>
+
+        <div class="adicional-item">
+            <div class="item-header">
+                <span>Catupiry 100 gramas</span>
+                <span>R$ 7,00</span>
+            </div>
+        </div>
+
+        <div class="adicional-item">
+            <div class="item-header">
+                <span>Palmito 100 gramas</span>
+                <span>R$ 6,00</span>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+        const pizzas = [
+            { id: "01", nome: "MUSSARELA", precoBase: 54.90, ing: "Mussarela, tomate, orégano e azeitonas." },
+            { id: "02", nome: "CALABRESA", precoBase: 54.90, ing: "Mussarela, calabresa, cebola roxa, orégano e azeitonas." },
+            { id: "03", nome: "MARGUERITA", precoBase: 54.90, ing: "Mussarela, parmesão, tomate, manjericão, orégano e azeitonas." },
+            { id: "04", nome: "PRESUNTO", precoBase: 54.90, ing: "Mussarela, presunto, tomate, orégano e azeitonas." },
+            { id: "05", nome: "FRANGO C/CATUPIRY", precoBase: 59.90, ing: "Mussarela, frango, Catupiry, orégano e azeitonas." },
+            { id: "06", nome: "FRANGO BACON", precoBase: 63.90, ing: "Mussarela, frango, bacon, Catupiry, orégano e azeitonas." },
+            { id: "07", nome: "PROVOLOMBO", precoBase: 63.90, ing: "Mussarela, lombo, provolone, Catupiry, orégano e azeitonas." },
+            { id: "08", nome: "PORTUGUESA", precoBase: 59.90, ing: "Mussarela, presunto, ervilha, palmito, ovo, tomate, orégano e azeitonas." },
+            { id: "09", nome: "PALMITO", precoBase: 59.90, ing: "Mussarela, palmito, Catupiry, orégano e azeitonas." },
+            { id: "10", nome: "TROPICAL", precoBase: 59.90, ing: "Mussarela, frango, milho verde, ervilha, ovo, tomate, orégano e azeitonas." },
+            { id: "11", nome: "CANADENSE", precoBase: 59.90, ing: "Mussarela, lombo, Catupiry, orégano e azeitonas." },
+            { id: "12", nome: "ATUM", precoBase: 59.90, ing: "Mussarela, atum, cebola roxa, orégano e azeitonas." },
+            { id: "13", nome: "CALAPIRY", precoBase: 59.90, ing: "Mussarela, calabresa, Catupiry, orégano e azeitonas." },
+            { id: "14", nome: "BACON", precoBase: 59.90, ing: "Mussarela, bacon, tomate, orégano e azeitonas." },
+            { id: "15", nome: "MINEIRA", precoBase: 59.90, ing: "Mussarela, frango, milho verde, bacon, tomate, orégano e azeitonas." },
+            { id: "16", nome: "ROMANA", precoBase: 59.90, ing: "Mussarela, champignon, bacon, Catupiry, orégano e azeitonas." },
+            { id: "17", nome: "PEPPERONI indisponível", precoBase: 59.90, ing: "" },
+            { id: "18", nome: "COSTELA", precoBase: 59.90, ing: "Mussarela, costela, Catupiry, cebola, tomate, orégano e azeitonas." },
+            { id: "19", nome: "DOIS QUEIJOS", precoBase: 54.90, ing: "Mussarela, provolone, orégano e azeitonas." },
+            { id: "20", nome: "TRES QUEIJOS", precoBase: 59.90, ing: "Mussarela, provolone, parmesão, orégano e azeitonas." },
+            { id: "21", nome: "QUATRO QUEIJOS", precoBase: 64.90, ing: "Mussarela, provolone, parmesão, Catupiry, orégano e azeitonas." },
+            { id: "22", nome: "BRÓCOLIS", precoBase: 64.90, ing: "Mussarela, brócolis, bacon, alho frito, orégano e azeitonas." },
+            { id: "23", nome: "CARNE SECA", precoBase: 63.90, ing: "Mussarela, carne seca, cebola roxa, tomate, orégano e azeitonas." },
+            { id: "24", nome: "AMERICANA", precoBase: 59.90, ing: "Mussarela, presunto, bacon, tomate, cebola roxa, orégano e azeitonas." },
+            { id: "25", nome: "ESCAROLA", precoBase: 59.90, ing: "Mussarela, escarola, bacon, azeitona, orégano." },
+            { id: "26", nome: "PERNIL SUÍNO", precoBase: 59.90, ing: "Mussarela, pernil suíno desfiado, Catupiry, tomate, cebola roxa, molho barbecue, orégano e azeitonas." }
+        ];
+
+        const lanches = [
+            { id: "L1", nome: "X-BURGER", precoBase: 25.00, ing: "Pão de hambúrguer, blend de carne de 150g, muito queijo prato derretido e maionese da casa." },
+            { id: "L2", nome: "X-SALADA", precoBase: 26.50, ing: "Pão, blend de carne de 150g, queijo prato, alface crespa, tomate fresco e maionese especial." },
+            { id: "L3", nome: "X-BACON", precoBase: 28.00, ing: "Pão, blend de carne de 150g, queijo, fatias crocantes de bacon e maionese artesanal." },
+            { id: "L4", nome: "X-EGG BACON", precoBase: 29.50, ing: "Pão, blend de carne de 150g, queijo, bacon crocante, ovo frito na chapa, alface e tomate." },
+            { id: "L5", nome: "X-TUDO DA CASA", precoBase: 30.00, ing: "Pão, 2x blends de carne de 150g, duplo queijo, bacon, ovo, calabresa defumada, alface, tomate e molho especial." }
+        ];
+
+        const esfirras = [
+            { id: "E1", nome: "ESFIHA DE CARNE", precoBase: 7.00, ing: "Massa artesanal super macia com recheio tradicional de carne bovina temperada com limão e especiarias." },
+            { id: "E2", nome: "ESFIHA DE QUEIJO", precoBase: 7.50, ing: "Massa leve recheada com uma combinação cremosa de mussarela e tempero verde." },
+            { id: "E3", nome: "ESFIHA DE FRANGO C/ CATUPIRY", precoBase: 8.00, ing: "Frango desfiado temperado artesanalmente e finalizado com Catupiry original." },
+            { id: "E4", nome: "ESFIHA DE CALABRESA", precoBase: 8.00, ing: "Calabresa moída com cebola e um toque leve de orégano." },
+            { id: "E5", nome: "ESFIHA DE DOCE DE LEITE", precoBase: 9.00, ing: "Deliciosa esfiha aberta recheada com doce de leite cremoso argentino." }
+        ];
+
+        let abaAtiva = 'pizzas';
+        let variacaoPizza = 'normal';
+        let variacaoLanche = 'normal';
+        let variacaoEsfiha = 'normal';
+
+        function renderizarProdutos() {
+
+            const container = document.getElementById('lista-produtos');
+
+            container.innerHTML = '';
+
+            let listaAtual = [];
+            let modificador = 1.0;
+
+            if (abaAtiva === 'pizzas') {
+
+                listaAtual = pizzas;
+
+                if (variacaoPizza === 'pop')
+                    modificador = 0.80;
+
+                if (variacaoPizza === 'super')
+                    modificador = 1.30;
+
+            } else if (abaAtiva === 'lanches') {
+
+                listaAtual = lanches;
+
+            } else if (abaAtiva === 'esfirras') {
+
+                listaAtual = esfirras;
+
+            }
+
+            listaAtual.forEach(item => {
+
+                const precoFinal = item.precoBase * modificador;
+
+                const precoFormatado =
+                    precoFinal.toFixed(2).replace('.', ',');
+
+                container.innerHTML += `
+                    <div class="menu-item">
+
+                        <div class="item-header">
+                            <span>${item.id} ${item.nome}</span>
+                            <span>R$ ${precoFormatado}</span>
+                        </div>
+
+                        <div class="item-description">
+                            ${item.ing}
+                        </div>
+
+                    </div>
+                `;
+            });
+        }
+
+        function mudarAba(aba) {
+
+            abaAtiva = aba;
+
+            document.querySelectorAll('.btn-aba')
+                .forEach(btn => btn.classList.remove('ativo'));
+
+            document.getElementById(`aba-${aba}`)
+                .classList.add('ativo');
+
+            document.querySelectorAll('.sub-botoes-container')
+                .forEach(el => el.style.display = 'none');
+
+            document.getElementById(`variacoes-${aba}`)
+                .style.display = 'flex';
+
+            const complementos =
+                document.getElementById('complementos-pizzas');
+
+            if (aba === 'pizzas') {
+                complementos.classList.add('visivel');
+            } else {
+                complementos.classList.remove('visivel');
+            }
+
+            renderizarProdutos();
+        }
+
+        function mudarPrecoPizza(variacao) {
+
+            variacaoPizza = variacao;
+
+            document.querySelectorAll(
+                '#variacoes-pizzas .btn-variacao'
+            ).forEach(btn =>
+                btn.classList.remove('ativo')
+            );
+
+            document.getElementById(
+                `btn-pizza-${variacao}`
+            ).classList.add('ativo');
+
+            renderizarProdutos();
+        }
+
+        renderizarProdutos();
+
+    </script>
+
+</body>
+</html>
